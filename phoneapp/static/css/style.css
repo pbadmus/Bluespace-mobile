@@ -1,0 +1,40 @@
+/* Styling for the brand link */
+.brand-link {
+    color: inherit;  /* Use the inherited color, not blue */
+    text-decoration: none;  /* Remove underline */
+}
+
+.brand-link:hover {
+    text-decoration: underline;  /* Optional underline on hover */
+}
+
+/* Other table styles (optional) */
+#makes-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#makes-table th, #makes-table td {
+    padding: 10px;
+    border: 1px solid black;
+    text-align: left;
+}
+
+#success-message, #error-message {
+    margin-top: 10px;
+}
+
+.new-entry-btn {
+    background-color: #28a745;  /* Green background */
+    color: white;  /* White text */
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.new-entry-btn:hover {
+    background-color: #218838;  /* Darker green on hover */
+}
+

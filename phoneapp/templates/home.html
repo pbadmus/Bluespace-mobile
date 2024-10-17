@@ -1,0 +1,84 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of Makes</title>
+    
+    <!-- Load the CSS file from the static folder -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h1>List of Makes</h1>
+
+    
+
+<!-- New Entry Link -->
+<a href="{% url 'new_make' %}" class="new-entry-btn">Add New Make</a>
+
+<!-- Existing search form, load button, and table... -->
+
+    <!-- Search Form -->
+    <form method="get" action="{% url 'search_results' %}">
+        <input type="text" name="q" placeholder="Search Makes by Name" value="{{ search_query }}">
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- Load Makes Button -->
+    {% if not makes_data %}
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Load Makes</button>
+        </form>
+    {% endif %}
+
+    <!-- Success and Error Messages -->
+    <div id="success-message" style="color: green; display: none;">
+        Make has been successfully deleted (locally).
+    </div>
+    <div id="error-message" style="color: red; display: none;">
+        An error occurred. Please try again.
+    </div>
+
+    <!-- If makes data is available, display it in a table -->
+    {% if makes_data %}
+        <table border="1" cellpadding="10" id="makes-table">
+            <thead>
+                <tr>
+                    <th>ID Number</th>
+                    <th>Brand Name</th>
+                    <th>Brand Logo</th>
+                    <th>Phone</th>
+                    <th>Television</th>
+                    <th>Laptop</th>
+                    <th>Wearable</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for make in makes_data %}
+                <tr id="make-row-{{ make.id }}">
+                    <td>{{ make.id }}</td>
+                    <td><a href="{% url 'make_detail' make.id %}" class="brand-link">{{ make.name }}</a></td>
+                    <td><img src="{{ make.pitures_url }}" alt="Logo" style="width: 50px;"></td>
+                    <td>{{ make.is_phone|yesno:"Yes,No" }}</td>
+                    <td>{{ make.is_television|yesno:"Yes,No" }}</td>
+                    <td>{{ make.is_laptop|yesno:"Yes,No" }}</td>
+                    <td>{{ make.is_wearable|yesno:"Yes,No" }}</td>
+                    <td>
+                        <button onclick="deleteMake({{ make.id }})">Delete</button>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No makes available. Please load the data.</p>
+    {% endif %}
+
+    <!-- Load the external JavaScript file -->
+    <script src="{% static 'js/delete_make.js' %}"></script>
+</body>
+</html>

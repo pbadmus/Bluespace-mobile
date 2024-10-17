@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make Details - {{ make.name }}</title>
+
+    <!-- Include CSS styles -->
+    <link rel="stylesheet" href="{% static 'css/make_detail.css' %}">
+</head>
+<body>
+    <h1>{{ make.name }}</h1>
+
+    {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+    {% else %}
+        <table border="1" cellpadding="10">
+            <tr>
+                <th>ID</th>
+                <td>{{ make.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ make.name }}</td>
+            </tr>
+            <tr>
+                <th>Logo</th>
+                <td>
+                    {% if make.logo %}
+                        <img src="{{ make.logo }}" alt="{{ make.name }} logo" style="width: 100px;">
+                    {% else %}
+                        <p>No logo available</p>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Phone</th>
+                <td>{{ make.is_phone|yesno:"Yes,No" }}</td>
+            </tr>
+            <tr>
+                <th>Television</th>
+                <td>{{ make.is_television|yesno:"Yes,No" }}</td>
+            </tr>
+            <tr>
+                <th>Laptop</th>
+                <td>{{ make.is_laptop|yesno:"Yes,No" }}</td>
+            </tr>
+            <tr>
+                <th>Wearable</th>
+                <td>{{ make.is_wearable|yesno:"Yes,No" }}</td>
+            </tr>
+            <tr>
+                <th>Created At</th>
+                <td>{{ make.created_at }}</td>
+            </tr>
+            <tr>
+                <th>Updated At</th>
+                <td>{{ make.updated_at }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ make.slug }}</td>
+            </tr>
+        </table>
+    {% endif %}
+
+    <!-- Link to go back to the makes list -->
+    <p><a href="{% url 'makes' %}">Back to Makes List</a></p>
+
+   
+</body>
+</html>

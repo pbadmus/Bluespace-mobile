@@ -1,0 +1,50 @@
+{% load static %}
+
+<h1>Search Result for {{ search_query }}</h1>
+
+<!-- Success and Error Messages -->
+<div id="success-message" style="color: green; display: none;">
+    Make has been successfully deleted (locally).
+</div>
+<div id="error-message" style="color: red; display: none;">
+    An error occurred. Please try again.
+</div>
+
+<!-- If makes data is available, display it in a table -->
+{% if makes_data %}
+    <table border="1" cellpadding="10" id="makes-table">
+        <thead>
+            <tr>
+                <th>ID Number</th>
+                <th>Brand Name</th>
+                <th>Brand Logo</th>
+                <th>Phone</th>
+                <th>Television</th>
+                <th>Laptop</th>
+                <th>Wearable</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for make in makes_data %}
+            <tr id="make-row-{{ make.id }}">
+                <td>{{ make.id }}</td>
+                <td>{{ make.name }}</td>
+                <td><img src="{{ make.logo }}" alt="Logo" style="width: 50px;"></td>
+                <td>{{ make.is_phone|yesno:"Yes,No" }}</td>
+                <td>{{ make.is_television|yesno:"Yes,No" }}</td>
+                <td>{{ make.is_laptop|yesno:"Yes,No" }}</td>
+                <td>{{ make.is_wearable|yesno:"Yes,No" }}</td>
+                <td>
+                    <button onclick="deleteMake({{ make.id }})">Delete</button>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No results found for "{{ search_query }}".</p>
+{% endif %}
+
+<!-- Load the external JavaScript file -->
+<script src="{% static 'js/delete_make.js' %}"></script>
